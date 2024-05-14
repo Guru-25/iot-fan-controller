@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+      content="Control fan from anywhere. Turn the fan on or off, adjust its speed, and control the LED light.">
+    <meta property="og:title" content="Home Automation">
+    <meta property="og:description"
+      content="Control fan from anywhere. Turn the fan on or off, adjust its speed, and control the LED light.">
+    <meta property="og:image" content="favicon.ico">
+    <meta property="og:type" content="website">
+    <title>Home Automation</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+
+  <body>
+
+    <div class="container">
+
+      <h1>Home IoT - Control from Anywhere!!</h1>
+      <h2><i>Forget Remote, Forget App</i></h2>
+      <br>
+      <br>
+
+      <div id="error-catch">
+
+        <div>
+          <b>&nbsp;&nbsp;&nbsp;&nbsp;Power:&nbsp;&nbsp;&nbsp;&nbsp;</b>
+          <label class="switch">
+            <input type="checkbox" id="power-switch" onclick="togglePower()">
+            <span class="slider round"></span>
+          </label>
+        </div>
+
+        <br>
+        <br>
+
+        <div id="offline-error" style="display: none;">
+          <div>
+            <b>&nbsp;&nbsp;&nbsp;&nbsp;Speed:&nbsp;&nbsp;&nbsp;&nbsp;</b>
+            <button data-speed="1" onclick="setFanSpeed(1)">Speed 1</button>
+            <br>
+            <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+            <button data-speed="2" onclick="setFanSpeed(2)">Speed 2</button>
+            <br>
+            <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+            <button data-speed="3" onclick="setFanSpeed(3)">Speed 3</button>
+            <br>
+            <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+            <button data-speed="4" onclick="setFanSpeed(4)">Speed 4</button>
+            <br>
+            <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+            <button data-speed="5" onclick="setFanSpeed(5)">Speed 5</button>
+            <br>
+            <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+            <button data-speed="6" onclick="setFanSpeed(6)">Speed 6</button>
+          </div>
+
+          <br>
+          <br>
+
+          <div>
+            <b>&nbsp;&nbsp;&nbsp;&nbsp;Lights:&nbsp;&nbsp;&nbsp;&nbsp;</b>
+            <label class="switch">
+              <input type="checkbox" id="led-switch" onclick="toggleLED()">
+              <span class="slider round"></span>
+            </label>
+          </div>
+
+          <br>
+          <br>
+        </div>
+      </div>
+      <br>
+      <br>
+    </div>
+
+    <script src="app.js"></script>
+
+  </body>
+</html>
