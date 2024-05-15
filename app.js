@@ -1,6 +1,6 @@
-const apiKey = 'xxxx'; 
-const refreshToken = 'xxxx';
-const deviceId = 'xxxx';
+const apiKey = 'xxx';
+const refreshToken = 'xxx';
+const deviceId = 'xxx';
 
 const apiServer = 'api.developer.atomberg-iot.com';
 
@@ -14,12 +14,12 @@ let ledState = false;
 async function getAccessToken() {
     try {
         const response = await fetch(`https://${apiServer}/v1/get_access_token`, {
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json',
-            'Authorization': `Bearer ${refreshToken}`,
-            'x-api-key': apiKey
-        }
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${refreshToken}`,
+                'x-api-key': apiKey
+            }
         });
         const data = await response.json();
         accessToken = data.message.access_token;
@@ -27,7 +27,9 @@ async function getAccessToken() {
         limitExceeded = false;
     }
     catch (error) {
+        document.getElementById('loader').style.display = 'none';
         document.getElementById('error-catch').innerText = 'Limit Exceeded';
+        document.getElementById('error-catch').style.display = 'block';
     }
 }
 
@@ -42,11 +44,11 @@ async function getDeviceState() {
     });
     const data = await response.json();
     isOnline = data.message.device_state[0].is_online;
-    if(isOnline) {
+    if (isOnline) {
         powerState = data.message.device_state[0].power;
         speedState = data.message.device_state[0].last_recorded_speed;
         ledState = data.message.device_state[0].led;
-        if(powerState) {
+        if (powerState) {
             document.getElementById('offline-error').style.display = 'block';
         }
         else {
@@ -54,15 +56,19 @@ async function getDeviceState() {
         }
     }
     else {
+        document.getElementById('loader').style.display = 'none';
         document.getElementById('error-catch').innerText = 'Device is Offline'
+        document.getElementById('error-catch').style.display = 'block';
     }
 }
 
-window.onload = async function() {
+window.onload = async function () {
     await getAccessToken();
-    if(!limitExceeded) {
+    if (!limitExceeded) {
         await getDeviceState();
-        if(isOnline) {
+        if (isOnline) {
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('error-catch').style.display = 'block';
             document.getElementById('power-switch').checked = powerState;
             document.querySelector(`button[data-speed="${speedState}"]`).classList.add('active-speed');
             document.getElementById('led-switch').checked = ledState;
@@ -80,10 +86,10 @@ async function sendCommand(commandType, value) {
             'x-api-key': apiKey
         },
         body: JSON.stringify({
-        device_id: deviceId,
-        command: {
-            [commandType]: value
-        }
+            device_id: deviceId,
+            command: {
+                [commandType]: value
+            }
         })
     });
     await getDeviceState();
@@ -114,16 +120,22 @@ async function sendCommand(commandType, value) {
 }
 
 async function togglePower() {
+    document.getElementById('loader2').style.display = 'block';
     const powerSwitch = document.getElementById('power-switch');
     if (powerSwitch.checked) {
         await sendCommand('power', true);
+        document.getElementById('loader2').style.display = 'none';
+        document.getElementById('result').innerText = 'power onned';
     }
     else {
         await sendCommand('power', false);
+        document.getElementById('loader2').style.display = 'none';
+        document.getElementById('result').innerText = 'power offed';
     }
 }
 
 async function setFanSpeed(value) {
+    document.getElementById('loader2').style.display = 'block';
     await sendCommand('speed', value);
     for (let i = 1; i <= 6; i++) {
         const button = document.querySelector(`button[data-speed="${i}"]`);
@@ -134,14 +146,21 @@ async function setFanSpeed(value) {
             button.classList.remove('active-speed');
         }
     }
+    document.getElementById('loader2').style.display = 'none';
+    document.getElementById('result').innerText = `changed speed to ${value}`;
 }
 
 async function toggleLED() {
+    document.getElementById('loader2').style.display = 'block';
     const ledSwitch = document.getElementById('led-switch');
     if (ledSwitch.checked) {
         await sendCommand('led', true);
+        document.getElementById('loader2').style.display = 'none';
+        document.getElementById('result').innerText = 'led onned';
     }
     else {
         await sendCommand('led', false);
+        document.getElementById('loader2').style.display = 'none';
+        document.getElementById('result').innerText = 'led offed';
     }
 }
